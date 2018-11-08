@@ -35,7 +35,7 @@ function createTestingNode(){
 class Node {
     constructor(value, left, right) {
         
-		
+		this._height = 0; 
 		this._value = value;
 		if (this._value)
 		{
@@ -43,15 +43,28 @@ class Node {
 		this._right = null;	
 		}
     }
+	get height() { return this._height; }
+	set height(height)	{this._height = height; 	}
+	
 	
 	get left() { return this._left; }
-    set left(left) { this._left = new Node(left); }
+    set left(left)	{	if (this.value){
+							this._left = left; 
+						}
+					}
     
 	get right() { return this._right; }
-    set right(right) { this._right = new Node(right); }
+    set right(right){	if(this.value){ 
+							this._right = right; 
+						}
+					}
 	
     get value() { return  this._value; }
 	
+	
+	balanceFactor(node){
+		return node.left.right -node.left.height
+	}
 	
 	add(number){
 		if (this.value == null) {
@@ -66,7 +79,9 @@ class Node {
 				}
 			
 			else {
+		
 			this._left = new Node (number);
+			
 			return true;
 			
 			}
@@ -78,6 +93,7 @@ class Node {
 			return true;
 			}
 			else {
+				this.height++; 
 				this._right = new Node(number);
 				return true;
 			}
@@ -87,7 +103,6 @@ class Node {
 	
 	
 	}
-
 	
 	search(number){
 		if (this.value == null) {
@@ -113,18 +128,55 @@ class Node {
 		if (this.left){
 			this.left.print()
 		}
-		
 		console.log(this.value);
-		
 		if (this.right){
 			this.right.print();
-		}
-		
-		
+		}	
 	}
 	
 	
-
+add(number){
+		if (this.value == null) {
+			this._value = number;
+			return true;
+		}
+		else {	
+		if (number < this._value) {
+			if (this._left) {
+				this._left.add(number);
+				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+				
+				return true;
+				}
+			
+			else {
+		
+			this._left = new Node (number);
+			this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+			return true;
+			
+			}
+		}
+			
+		if (number > this._value) {
+			if (this._right) {
+				this._right.add(number);
+				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+			return true;
+			}
+			else {
+				this._right = new Node(number);
+				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+				return true;
+			}
+		}
+		
+		}
+	
+	
+	}
+	
+	
 	
 	
 	
@@ -132,10 +184,45 @@ class Node {
 
 
 
+
+
+function rightRotate(node){
+		let z= node;
+		let y= z.left;
+		z.left = y.right; 
+		y.right = z; 
+		return y;
+}
 	
-		
+
+function leftRotate(node){
+		let z= node;
+		let y= z.right;
+		z.right = y.left; 
+		y.left = z; 
+		return y;
+}	
+
+function toString(node) {
+        let str = '';
+        if (node) {
+            str = '[' + this.toString(node.left) + `, ${node.value}(${node.height}), ` + this.toString(node.right) + ']';
+        }
+        return str;
+    } 
 	
 	
 	
+function getBalance(node) { 
+        if (node == null) 
+            return 0;   
+        return height(node.left) - height(node.right); 
+} 
+
+
+function getHeight(node){
+	if (!node){
+		return 0;
+	} else return node.height;
 	
-	
+}
