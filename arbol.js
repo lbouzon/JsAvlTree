@@ -1,15 +1,8 @@
+ var a ; 
+ 
  function AddNumberToList (){	
  
- let NumberToAdd = Number(document.getElementById("numberHolder").value); 
- 
- if (!a){
-	 var a = new Node (NumberToAdd);
- }
- 
- 
- a.add(NumberToAdd);
- 
- 
+ let NumberToAdd = Number(document.getElementById("numberHolder").value);  
  if (NumberToAdd) {
 	console.log(NumberToAdd)
 	let ul = document.getElementById("listaNum");
@@ -20,9 +13,24 @@
 	 }
  document.getElementById("numberHolder").value = null;	 
  };
-	
-	
 
+function createTestingNode(){
+	let NumberToAdd = Number(document.getElementById("numberHolder").value); 
+	if (NumberToAdd) {
+		if (a== undefined) {
+			 a  = new Node(NumberToAdd);
+			 AddNumberToList(); 	
+		} else {
+			if (a.add(NumberToAdd)) {
+				AddNumberToList(); 	
+			} else {
+				document.getElementById("numberHolder").value = null;	
+			}
+		}
+	}
+
+
+};
 
 class Node {
     constructor(value, left, right) {
@@ -48,18 +56,18 @@ class Node {
 	add(number){
 		if (this.value == null) {
 			this._value = number;
-			return this;
+			return true;
 		}
 		else {	
 		if (number < this._value) {
 			if (this._left) {
 				this._left.add(number);
-				return this
+				return true;
 				}
 			
 			else {
 			this._left = new Node (number);
-			return this;
+			return true;
 			
 			}
 		}
@@ -67,15 +75,17 @@ class Node {
 		if (number > this._value) {
 			if (this._right) {
 				this._right.add(number);
-			return this
+			return true;
 			}
 			else {
 				this._right = new Node(number);
-				return this;
+				return true;
 			}
 		}
 		
 		}
+	
+	
 	}
 
 	
@@ -99,13 +109,23 @@ class Node {
 		}
 	};
 	
-
-	
 	print(){
+		if (this.left){
+			this.left.print()
+		}
 		
+		console.log(this.value);
+		
+		if (this.right){
+			this.right.print();
+		}
 		
 		
 	}
+	
+	
+
+	
 	
 	
 };
