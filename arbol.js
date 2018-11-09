@@ -33,8 +33,8 @@ function createTestingNode(){
 };
 
 class Node {
-    constructor(value, left, right) {
-        
+	constructor(value, left, right) {
+		
 		this._height = 0; 
 		this._value = value;
 		if (this._value)
@@ -42,30 +42,24 @@ class Node {
 		this._left = null;	
 		this._right = null;	
 		}
-    }
+	}
 	get height() { return this._height; }
 	set height(height)	{this._height = height; 	}
 	
 	
 	get left() { return this._left; }
-    set left(left)	{	if (this.value){
+	set left(left)	{	if (this.value){
 							this._left = left; 
 						}
 					}
-    
+	
 	get right() { return this._right; }
-    set right(right){	if(this.value){ 
+	set right(right){	if(this.value){ 
 							this._right = right; 
 						}
 					}
 	
-    get value() { return  this._value; }
-	
-	
-	balanceFactor(node){
-		return node.left.right -node.left.height
-	}
-	
+	get value() { return  this._value; }
 	
 	search(number){
 		if (this.value == null) {
@@ -100,7 +94,8 @@ class Node {
 	
 	add(number){
 		if (this.value == null) {
-			this._value = number;
+		    this._value = number;
+		    BalanceNode(this);
 			return true;
 		}
 		if (number < this._value) {
@@ -108,25 +103,29 @@ class Node {
 				this._left.add(number);
 				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
 				
-				
+				BalanceNode(this);
 				return true;
 			} else {
 				this._left = new Node (number);
-				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				BalanceNode(this);
 				return true;
 			}
 		}
 		if (number > this._value) {
 			if (this._right) {
 				this._right.add(number);
-				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				BalanceNode(this);
 			return true;
 			}else {
 				this._right = new Node(number);
-				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
+				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				BalanceNode(this);
 				return true;
 			}
 		}
+		return false;
 	}
 	
 	
@@ -146,7 +145,6 @@ function leftRotate(node){
 		b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
 		return b; 
 }
-
 
 function rightRotate(node){
 		let c= node;
@@ -200,20 +198,18 @@ a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
 
 
 function toString(node) {
-        let str = '';
-        if (node) {
-            str = '[' + this.toString(node.left) + `, ${node.value}(${node.height}), ` + this.toString(node.right) + ']';
-        }
-        return str;
-    } 
+		let str = '';
+		if (node) {
+			str = '[' + this.toString(node.left) + `, ${node.value}(${node.height}), ` + this.toString(node.right) + ']';
+		}
+		return str;
+	} 
 		
-	
 function getBalance(node) { 
-        if (node == null) 
-            return 0;   
-        return height(node.left) - height(node.right); 
+		if (node == null) 
+			return 0;   
+		return getHeight(node.left) - getHeight(node.right);
 } 
-
 
 function getHeight(node){
 	if (!node){
@@ -221,3 +217,26 @@ function getHeight(node){
 	} else return node.height;
 	
 }
+
+function BalanceNode(node) {
+    
+    if (node==null){
+        return null
+    }
+    if (getBalance(node) > 1) {
+        if (node.left.left !== null){
+            return leftRotate(node);
+        } else {
+            return leftRightRotate(node);
+        }
+    }
+
+    if (getBalance(node) < -1) {
+        if (node.right.right !== null) {
+            return rightRotate(node);
+        } else {
+            return rightLeftRotate(node);
+        }
+    }
+    return node;
+ };
