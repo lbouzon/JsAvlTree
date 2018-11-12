@@ -109,12 +109,12 @@ class Node {
 		if (number < this.value) {
 			if (this.left) {
 				this.left.add(number);
-				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1	
+				this.height = Math.max(this.left.height, this.right.height) + 1
 				this.left = balanceNode(this.left);
 				return true;
 			} else {
 				this.left = new Node (number);
-				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				this.height = Math.max(this.left.height, this.right.height) + 1
 				this.left = balanceNode(this.left);
 				return true;
 			}
@@ -122,12 +122,12 @@ class Node {
 		if (number > this._value) {
 		    if (this.right.value !== null) {
 				this.right.add(number);
-				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				this.height = Math.max(this.left.height, this.right.height) + 1
 				this.right = balanceNode(this.right);
 			return true;
 			}else {
 				this.right = new Node(number);
-				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
+				this.height = Math.max(this.left.height, this.right.height) + 1
 				this.right = balanceNode(this.right);
 				return true;
 			}
@@ -135,7 +135,7 @@ class Node {
 		return false;
 	}
 	
-	
+	//meter los rotates , balances , heigts as propety , search
 	// end of class
 }
 
@@ -215,13 +215,6 @@ function getBalance(node) {
 		return getHeight(node.left) - getHeight(node.right);
 } 
 
-function getHeight(node) {
-	if (!node){
-		return 0;
-	} else return node.height;
-	
-}
-
 function balanceNode(node) {
     
     if (node==null){
@@ -259,7 +252,6 @@ function printTree(node) {
     
     return lisOfNumbers
 }
-
 
 function toString(node) {
     let str = '';
