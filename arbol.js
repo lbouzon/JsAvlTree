@@ -1,4 +1,5 @@
- function AddNumberToList (){	
+var tree = null;
+function addNumberToList() {
  
  let NumberToAdd = Number(document.getElementById("numberHolder").value);  
  if (NumberToAdd) {
@@ -8,25 +9,34 @@
 	li.appendChild(document.createTextNode(NumberToAdd));
 	li.className  += " list-group-item"
 	ul.appendChild(li);
+	createTestingNode (NumberToAdd);
 	 }
  document.getElementById("numberHolder").value = null;	 
- };
+ }
 
-function createTestingNode(){
-	let NumberToAdd = Number(document.getElementById("numberHolder").value); 
-	if (NumberToAdd) {
-		if (a== undefined) {
-			 a  = new Node(NumberToAdd);
-			 AddNumberToList(); 	
-		} else {
-			if (a.add(NumberToAdd)) {
-				AddNumberToList(); 	
-			} else {
-				document.getElementById("numberHolder").value = null;	
-			}
-		}
-	}
 
+
+function resetNode() {
+    tree = null;
+    let ul = document.getElementById("listaNum");
+    ul.innerHTML = null;
+
+    let ul2 = document.getElementById("treeAvl");
+    ul2.innerHTML = "";
+
+}
+
+
+
+function createTestingNode(number){
+	
+	
+    if (tree == undefined) {
+        tree = new Node(number);
+
+    } else {
+        tree.add(number);
+    }
 
 };
 
@@ -85,33 +95,25 @@ class Node {
 		}
 	};
 	
-	print(){
-		if (this.left){
-			this.left.print()
-		}
-		console.log(this.value);
-		if (this.right){
-			this.right.print();
-		}	
-	}
+
 	
 	
 	add(number){
 		if (this.value == null) {
 		    this._value = number;
-		    BalanceNode(this);
+		    balanceNode(this);
 			return true;
 		}
 		if (number < this._value) {
 			if (this._left) {
 				this._left.add(number);
 				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1	
-				this.left  =  BalanceNode(this.left);
+				this.left = balanceNode(this.left);
 				return true;
 			} else {
 				this._left = new Node (number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				this.left  =  BalanceNode(this.left);
+				this.left = balanceNode(this.left);
 				return true;
 			}
 		}
@@ -119,12 +121,12 @@ class Node {
 			if (this._right) {
 				this._right.add(number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				this.right = BalanceNode(this.right);
+				this.right = balanceNode(this.right);
 			return true;
 			}else {
 				this._right = new Node(number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				this.right = BalanceNode(this.right);
+				this.right = balanceNode(this.right);
 				return true;
 			}
 		}
@@ -197,13 +199,7 @@ a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
 	return leftRotate(a);
 }
 
-function toString(node) {
-		let str = '';
-		if (node) {
-			str = '[' + this.toString(node.left) + `, ${node.value}(${node.height}), ` + this.toString(node.right) + ']';
-		}
-		return str;
-	} 
+
 		
 function getBalance(node) { 
 		if (node == null) 
@@ -218,7 +214,7 @@ function getHeight(node){
 	
 }
 
-function BalanceNode(node) {
+function balanceNode(node) {
     
     if (node==null){
         return null
@@ -243,21 +239,49 @@ function BalanceNode(node) {
 
 
 
+
+
+
 function printTree(node) {
-    let altura;
-    if (node.height == null) {
-        altura = 0
-    } else {
-        altura = node.height
+    let lisOfNumbers="";
+    if (node.left !== null) {
+        lisOfNumbers += printTree(node.left);
     }
     
-    if (node.left) {
-        printTree(node.left);
-        }
-    console.log("el nodo vale", node.value ,"Y la altura" , altura);
-    if (node.right) {
-        printTree(node.right);
+    lisOfNumbers += node.value +" ";
+   // console.log(lisOfNumbers)
+    if (node.right !== null) {
+        lisOfNumbers += printTree(node.right);
+     
     }
-
-
+    
+    return lisOfNumbers
 }
+
+
+function toString(node) {
+    let str = '';
+    if (node) {
+        str = this.toString(node.left) + ` ${node.value} ` + this.toString(node.right);
+    }
+    return str;
+}
+
+
+function printTreeAsList(Node) {
+
+   
+
+    let ul = document.getElementById("treeAvl");
+    ul.innerHTML = "";
+    printTree(tree).slice(0, -1).split(" ").forEach(function (element) {
+
+        let li = document.createElement("li");
+        li.appendChild(document.createTextNode(element));
+        li.className += " list-group-item"
+        ul.appendChild(li);
+    });
+};
+
+
+document.getElementById("numberHolder").addEventListener("keydown",function (event){if (event.keyCode ===13) {addNumberToList()}})
