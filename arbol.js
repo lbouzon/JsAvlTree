@@ -1,5 +1,3 @@
-
- 
  function AddNumberToList (){	
  
  let NumberToAdd = Number(document.getElementById("numberHolder").value);  
@@ -31,6 +29,12 @@ function createTestingNode(){
 
 
 };
+
+
+
+
+
+
 
 class Node {
 	constructor(value, left, right) {
@@ -101,14 +105,13 @@ class Node {
 		if (number < this._value) {
 			if (this._left) {
 				this._left.add(number);
-				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1
-				
-				BalanceNode(this);
+				this.height = Math.max(getHeight(this.left) , getHeight(this.right)) + 1	
+				this.left  =  BalanceNode(this.left);
 				return true;
 			} else {
 				this._left = new Node (number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				BalanceNode(this);
+				this.left  =  BalanceNode(this.left);
 				return true;
 			}
 		}
@@ -116,12 +119,12 @@ class Node {
 			if (this._right) {
 				this._right.add(number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				BalanceNode(this);
+				this.right = BalanceNode(this.right);
 			return true;
 			}else {
 				this._right = new Node(number);
 				this.height = Math.max(getHeight(this.left), getHeight(this.right)) + 1
-				BalanceNode(this);
+				this.right = BalanceNode(this.right);
 				return true;
 			}
 		}
@@ -130,8 +133,7 @@ class Node {
 	
 	
 	// end of class
-};
-
+}
 
 function leftRotate(node){
 		let a= node;
@@ -195,8 +197,6 @@ a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
 	return leftRotate(a);
 }
 
-
-
 function toString(node) {
 		let str = '';
 		if (node) {
@@ -239,4 +239,25 @@ function BalanceNode(node) {
         }
     }
     return node;
- };
+};
+
+
+
+function printTree(node) {
+    let altura;
+    if (node.height == null) {
+        altura = 0
+    } else {
+        altura = node.height
+    }
+    
+    if (node.left) {
+        printTree(node.left);
+        }
+    console.log("el nodo vale", node.value ,"Y la altura" , altura);
+    if (node.right) {
+        printTree(node.right);
+    }
+
+
+}
