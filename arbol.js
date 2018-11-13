@@ -6,12 +6,23 @@ class NullNode {
         this._height = 0;
     }
 
-    get left() { return new NullNode(); }
-    get right() { return new NullNode(); }
+    get left() { return null; }
+    get right() { return null; }
     get value() { return null; }
 
+    add(number) {
+        return true;
+    };
 
-};
+    search(number) {
+        return false;
+    };
+
+
+    balance() {
+        return this;
+    };
+}
 
 var tree = new NullNode();
 function addNumberToList() {
@@ -46,134 +57,152 @@ function createTestingNode(number){
 };
 
 class Node {
-	constructor(value, left, right) {
-		
-		this._height = 0; 
-		this._value = value;
-		if (this._value)
-		{
-		this._left = new NullNode() ;	
-		this._right = new NullNode();
-		}
-	}
-	get height() { return this._height; }
-	set height(height)	{this._height = height; 	}
-	
-	
+    constructor(value, left, right) {
+
+        this._height = 0;
+        this._value = value;
+        if (this._value) {
+            this._left = new NullNode();
+            this._right = new NullNode();
+        }
+    }
+    get height() { return this._height; }
+    set height(height) { this._height = height; }
+
+
     //get left() { return this._left; }
 
-    get left() { return this._left;  }
+    get left() { return this._left; }
 
-	set left(left)	{	if (this.value){
-							this._left = left; 
-						}
-					}
-	
-	get right() { return this._right; }
-	set right(right){	if(this.value){ 
-							this._right = right; 
-						}
-					}
-	
-	get value() { return  this._value; }
-	
-	search(number){
-		if (this.value == null) {
-			console.log("Number not found");
-		} else if (number == this._value)  {
-			console.log("Number found");
-		} else if (number<this._value){
-					if (this.left !== null){
-						this.left.search(number);
-					} else {
-					console.log("Number not found");
-					}
-		} else if (number>this._value){
-					if (this.right !== null){
-					this.right.search(number);
-					} else {
-					console.log("Number not found");
-					}
-		}
-	};
-	
+    set left(left) {
+        if (this.value) {
+            this._left = left;
+        }
+    }
 
-	
-	
-	add(number){
-		if (this.value == null) {
-		    this._value = number;
-		    balanceNode(this);
-			return true;
-		}
-		if (number < this.value) {
-			if (this.left) {
-				this.left.add(number);
-				this.height = Math.max(this.left.height, this.right.height) + 1
-				this.left = balanceNode(this.left);
-				return true;
-			} else {
-				this.left = new Node (number);
-				this.height = Math.max(this.left.height, this.right.height) + 1
-				this.left = balanceNode(this.left);
-				return true;
-			}
-		}
-		if (number > this._value) {
-		    if (this.right.value !== null) {
-				this.right.add(number);
-				this.height = Math.max(this.left.height, this.right.height) + 1
-				this.right = balanceNode(this.right);
-			return true;
-			}else {
-				this.right = new Node(number);
-				this.height = Math.max(this.left.height, this.right.height) + 1
-				this.right = balanceNode(this.right);
-				return true;
-			}
-		}
-		return false;
+    get right() { return this._right; }
+    set right(right) {
+        if (this.value) {
+            this._right = right;
+        }
+    }
+
+    get value() { return this._value; }
+
+    search(number) {
+        
+        if (number < this.value) {
+            this.left.search(number);
+           
+        }
+        if (number > this.value) {
+         
+            this.right.search(number);
+           
+        }
+       
+
+        if (number == this.value) {
+            console.log("number encontrado");
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
+
+
+    add(number) {
+        if (this.value == null) {
+            this._value = number;
+            return this;
+        }
+        if (number < this.value) {
+            if (this.left.value !== null) {
+                this.left.add(number);
+                
+            } else {
+                this.left = new Node(number);
+            }
+        }
+        if (number > this.value) {
+            if (this.right.value !== null) {
+                this.right.add(number);
+            } else {
+                this.right = new Node(number);
+            }
+        }
+        return this;
+    };
+
+	leftRotate(node) {
+	    debugger
+	    let a = node;
+	    let b = a.right;
+	    let c;
+	    if (b.left) {
+	        c = b.left;
+	    }
+	    a.right = c;
+	    b.left = a;
+	    c.height = Math.max(getHeight(c.left), getHeight(c.right)) + 1;
+	    a.height = Math.max(getHeight(a.left), getHeight(a.right)) + 1;
+	    b.height = Math.max(getHeight(b.left), getHeight(b.right)) + 1;
+	    return b;
+	}
+
+	rightRotate(node) {
+	    let c = node;
+	    let a;
+	    let b = c.left;
+	    if (b.right) {
+	        a = b.right;
+	    }
+	    b.right = c;
+	    b.left = a;
+	    a.height = Math.max(getHeight(a.left), getHeight(a.right)) + 1;
+	    c.height = Math.max(getHeight(c.left), getHeight(c.right)) + 1;
+	    b.height = Math.max(getHeight(b.left), getHeight(b.right)) + 1;
+	    return b;
 	}
 	
 	//meter los rotates , balances , heigts as propety , search
-	// end of class
+    // end of class
+
+
+	getBalance() {
+	   return (this.left._height) - (this.right._height);
+	}
+
+	balanceNode() {
+
+	    if (this == null) {
+	        return null
+	    }
+	    if (getBalance() > 1) {
+	        if (this.left.left !== null) {
+	            return leftRotate(node);
+	        } else {
+	            return leftRightRotate(node);
+	        }
+	    }
+
+	    if (getBalance(node) < -1) {
+	        if (node.right.right !== null) {
+	            return rightRotate(node);
+	        } else {
+	            return rightLeftRotate(node);
+	        }
+	    }
+	    return this;
+	};
+
+
+
 }
 
-function leftRotate(node){
-    debugger
 
-    let a = node;
-    let b = a.right;
-    let c;
-    if (b.left){
-    c = b.left;
-    }
-    a.right = c;
-    b.left = a;
-
-    
-
-
-    c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
-    a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
-    b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
-    return b; 
-}
-
-function rightRotate(node){
-    let c = node;
-    let a;
-		let b = c.left;
-    if (b.right){
-        a = b.right;
-    }
-	b.right = c; 
-	b.left = a;
-    a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
-	c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
-	b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
-	return b; 
-}
 	
 function leftRightRotate(node){
 	//let c = node; 
@@ -209,34 +238,31 @@ function rightLeftRotate(node){
     return leftRotate(node);
 }
 
-function getBalance(node) { 
-		if (node == null) 
-			return 0;   
-		return getHeight(node.left) - getHeight(node.right);
-} 
 
-function balanceNode(node) {
+function searchNumber() {
+
+    let numberToSearch = Number(document.getElementById("numberHolder").value);
+    let lista = document.getElementById("listaNum")
+
+
+    document.getElementById("numberHolder").value = null;
+    if (tree.search(numberToSearch) == true) {
+        lista.style.backgroundColor = "lightgreen"
+       // lista.classList.add(" alert alert-primary")
+
+
+    } else { document.getElementById("listaNum").style.backgroundColor = "red" }
+
+
+    setTimeout(function () { document.getElementById("listaNum").style.backgroundColor = "" }, 3000);
+
     
-    if (node==null){
-        return null
-    }
-    if (getBalance(node) > 1) {
-        if (node.left.left !== null){
-            return leftRotate(node);
-        } else {
-            return leftRightRotate(node);
-        }
-    }
 
-    if (getBalance(node) < -1) {
-        if (node.right.right !== null) {
-            return rightRotate(node);
-        } else {
-            return rightLeftRotate(node);
-        }
-    }
-    return node;
+     
+    
+
 };
+
 
 function printTree(node) {
     let lisOfNumbers="";
@@ -245,7 +271,7 @@ function printTree(node) {
     }
     
     lisOfNumbers += node.value +" ";
-    if (node.right !== null) {
+    if (node.right.value !== null) {
         lisOfNumbers += printTree(node.right);
      
     }
@@ -275,13 +301,6 @@ function printTreeAsList(Node) {
 
 document.getElementById("numberHolder").addEventListener("keydown", function (event) { if (event.keyCode === 13) { addNumberToList() } })
 
-function search(number, node) {
 
-    let NumberToAdd = Number(document.getElementById("numberHolder").value);
-
-
-    document.getElementById("numberHolder").value = null;
-
-};
 
 
