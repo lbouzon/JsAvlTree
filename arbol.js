@@ -9,9 +9,9 @@ class NullNode {
     get left() { return null; }
     get right() { return null; }
     get value() { return null; }
-
+    get height() { return this._height; }
     add(number) {
-        return true;
+        return new Node(number);
     };
 
     search(number) {
@@ -57,23 +57,20 @@ function createTestingNode(number){
 };
 
 class Node {
-    constructor(value, left, right) {
+    constructor(value) {
 
         this._height = 0;
         this._value = value;
-        if (this._value) {
-            this._left = new NullNode();
-            this._right = new NullNode();
-        }
+        this._left = new NullNode();
+        this._right = new NullNode();
+        
     }
     get height() { return this._height; }
     set height(height) { this._height = height; }
 
 
-    //get left() { return this._left; }
 
     get left() { return this._left; }
-
     set left(left) {
         if (this.value) {
             this._left = left;
@@ -90,51 +87,33 @@ class Node {
     get value() { return this._value; }
 
     search(number) {
-        
+        if (number == this.value) {
+            return true;
+        }
         if (number < this.value) {
-            this.left.search(number);
+            return this.left.search(number);
            
         }
         if (number > this.value) {
-         
-            this.right.search(number);
-           
+            return this.right.search(number);
         }
-       
-
-        if (number == this.value) {
-            console.log("number encontrado");
-            return true;
-        } else {
             return false;
-        }
-    };
+    }
 
 
 
 
     add(number) {
-        if (this.value == null) {
-            this._value = number;
-            return this;
-        }
         if (number < this.value) {
-            if (this.left.value !== null) {
-                this.left.add(number);
-                
-            } else {
-                this.left = new Node(number);
-            }
+            this.left = this.left.add(number);
+           
+        } else if (number > this.value) {
+            this.right = this.right.add(number);
+            
         }
-        if (number > this.value) {
-            if (this.right.value !== null) {
-                this.right.add(number);
-            } else {
-                this.right = new Node(number);
-            }
-        }
+        this.height = Math.max(this.left.height, this.right.height) + 1;
         return this;
-    };
+    }
 
 	leftRotate(node) {
 	    debugger
