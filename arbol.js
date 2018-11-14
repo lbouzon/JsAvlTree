@@ -9,7 +9,10 @@ class NullNode {
     get left() { return null; }
     get right() { return null; }
     get value() { return null; }
+
     get height() { return this._height; }
+    set height(height) {  }
+
     add(number) {
         return new Node(number);
     };
@@ -17,11 +20,11 @@ class NullNode {
     search(number) {
         return false;
     };
-
-
     balance() {
         return this;
     };
+    getBalance() 
+        {return 0;}
 }
 
 var tree = new NullNode();
@@ -52,14 +55,14 @@ function createTestingNode(number){
     if (tree.value == null) {
         tree = new Node(number);
     } else {
-        tree.add(number);
+        tree = tree.add(number);
     }
 };
 
 class Node {
     constructor(value) {
 
-        this._height = 0;
+        this._height = 1;
         this._value = value;
         this._left = new NullNode();
         this._right = new NullNode();
@@ -67,8 +70,6 @@ class Node {
     }
     get height() { return this._height; }
     set height(height) { this._height = height; }
-
-
 
     get left() { return this._left; }
     set left(left) {
@@ -101,8 +102,6 @@ class Node {
     }
 
 
-
-
     add(number) {
         if (number < this.value) {
             this.left = this.left.add(number);
@@ -112,134 +111,84 @@ class Node {
             
         }
         this.height = Math.max(this.left.height, this.right.height) + 1;
-        return this;
+        return this.balanceNode();
     }
 
-	leftRotate(node) {
-	    debugger
-	    let a = node;
+	leftRotate() {
+	    console.log("leftRotate");
+	    let a = this;
 	    let b = a.right;
-	    let c;
-	    if (b.left) {
-	        c = b.left;
-	    }
+	    let c = b.left;
 	    a.right = c;
 	    b.left = a;
-	    c.height = Math.max(getHeight(c.left), getHeight(c.right)) + 1;
-	    a.height = Math.max(getHeight(a.left), getHeight(a.right)) + 1;
-	    b.height = Math.max(getHeight(b.left), getHeight(b.right)) + 1;
+	    c.height = Math.max((c.left == null) ? 0 : c.left.height, (c.right == null) ? 0 : c.right.height) + 1;
+	    a.height = Math.max(a.left.height, a.right.height) + 1;
+	    b.height = Math.max(b.left.height, b.right.height) + 1;
 	    return b;
 	}
 
-	rightRotate(node) {
-	    let c = node;
-	    let a;
-	    let b = c.left;
-	    if (b.right) {
-	        a = b.right;
-	    }
-	    b.right = c;
-	    b.left = a;
-	    a.height = Math.max(getHeight(a.left), getHeight(a.right)) + 1;
-	    c.height = Math.max(getHeight(c.left), getHeight(c.right)) + 1;
-	    b.height = Math.max(getHeight(b.left), getHeight(b.right)) + 1;
+	rightRotate() {
+	    console.log("rightRotate");
+	    let a = this;
+	    let b = a.left;
+	    let c = b.right;
+	    a.left = c;
+	    b.right = a;
+	    c.height = Math.max((c.left == null) ? 0 : c.left.height, (c.right == null) ? 0 : c.right.height) + 1;
+	    a.height = Math.max(a.left.height, a.right.height) + 1;
+	    b.height = Math.max(b.left.height, b.right.height) + 1;
 	    return b;
 	}
 	
-	//meter los rotates , balances , heigts as propety , search
-    // end of class
-
-
 	getBalance() {
-	   return (this.left._height) - (this.right._height);
+	    return (this.left.height - this.right.height);
 	}
 
 	balanceNode() {
+	    if (this.getBalance() > 1) {
+	        if (this.left.getBalance() < 0){
+	            this.left = this.left.leftRotate();
 
-	    if (this == null) {
-	        return null
-	    }
-	    if (getBalance() > 1) {
-	        if (this.left.left !== null) {
-	            return leftRotate(node);
-	        } else {
-	            return leftRightRotate(node);
 	        }
-	    }
-
-	    if (getBalance(node) < -1) {
-	        if (node.right.right !== null) {
-	            return rightRotate(node);
-	        } else {
-	            return rightLeftRotate(node);
+	        return this.rightRotate();
+	    } else if (this.getBalance() < -1) {
+	        if (this.right.getBalance() > 0) {
+	            this.right = this.right.rightRotate();
 	        }
+	        return this.leftRotate();
 	    }
 	    return this;
 	};
-
-
-
 }
 
 
 	
-function leftRightRotate(node){
-	//let c = node; 
-	//let a= c.left;
-	//let b= a.right;
-	//c.left = b;
-	//b.left = a; 
-	//a.right = null;
-    //a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
-	//c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
-    //b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
+//function leftRightRotate(node){
+//	//let c = node; 
+//	//let a= c.left;
+//	//let b= a.right;
+//	//c.left = b;
+//	//b.left = a; 
+//	//a.right = null;
+//    //a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
+//	//c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
+//    //b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
 
-    node.left = leftRotate(node.left);
-    node.right = null;
+//    node.left = leftRotate(node.left);
+//    node.right = null;
 
-    return rightRotate(node)
-}
-
-function rightLeftRotate(node){
-//	let a = node ; 
-//	let c = a.right; 
-//	let b= c.left;
-//	a.right = b;
-//	b.right = c;
-//	c.left = null;
-	
-//a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
-//		c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
-//		b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
-	
-    node.right = rightRotate(node.right);
-    node.left = null;
-    return leftRotate(node);
-}
+//    return rightRotate(node)
+//}
 
 
 function searchNumber() {
-
     let numberToSearch = Number(document.getElementById("numberHolder").value);
     let lista = document.getElementById("listaNum")
-
-
     document.getElementById("numberHolder").value = null;
     if (tree.search(numberToSearch) == true) {
         lista.style.backgroundColor = "lightgreen"
-       // lista.classList.add(" alert alert-primary")
-
-
     } else { document.getElementById("listaNum").style.backgroundColor = "red" }
-
-
     setTimeout(function () { document.getElementById("listaNum").style.backgroundColor = "" }, 3000);
-
-    
-
-     
-    
-
 };
 
 
@@ -261,7 +210,7 @@ function printTree(node) {
 function toString(node) {
     let str = '';
     if (node) {
-        str = toString(node.left) + `${node.value}` + toString(node.right);
+        str = '[' + toString(node.left) + `(${node.value})` + toString(node.right) + ']';
     }
     return str;
 }
