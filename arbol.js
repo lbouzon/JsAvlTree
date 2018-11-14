@@ -44,7 +44,7 @@ function addNumberToList() {
  }
 
 function resetNode() {
-    tree = null;
+    tree = new NullNode();;
     let ul = document.getElementById("listaNum");
     ul.innerHTML = null;
     let ul2 = document.getElementById("treeAvl");
@@ -162,26 +162,7 @@ class Node {
 }
 
 
-	
-//function leftRightRotate(node){
-//	//let c = node; 
-//	//let a= c.left;
-//	//let b= a.right;
-//	//c.left = b;
-//	//b.left = a; 
-//	//a.right = null;
-//    //a.height = Math.max(getHeight(a.left), getHeight(a.right))+1;
-//	//c.height = Math.max(getHeight(c.left), getHeight(c.right))+1;
-//    //b.height = Math.max(getHeight(b.left), getHeight(b.right))+1;
-
-//    node.left = leftRotate(node.left);
-//    node.right = null;
-
-//    return rightRotate(node)
-//}
-
-
-function searchNumber() {
+	function searchNumber() {
     let numberToSearch = Number(document.getElementById("numberHolder").value);
     let lista = document.getElementById("listaNum")
     document.getElementById("numberHolder").value = null;
