@@ -115,7 +115,6 @@ class Node {
     }
 
 	leftRotate() {
-	    console.log("leftRotate");
 	    let a = this;
 	    let b = a.right;
 	    let c = b.left;
@@ -128,7 +127,6 @@ class Node {
 	}
 
 	rightRotate() {
-	    console.log("rightRotate");
 	    let a = this;
 	    let b = a.left;
 	    let c = b.right;
