@@ -40,7 +40,8 @@ function addNumberToList() {
 	ul.appendChild(li);
 	createTestingNode (NumberToAdd);
 	 }
- document.getElementById("numberHolder").value = null;	 
+ document.getElementById("numberHolder").value = null;
+ printGraph();
  }
 
 function resetNode() {
@@ -49,6 +50,7 @@ function resetNode() {
     ul.innerHTML = null;
     let ul2 = document.getElementById("treeAvl");
     ul2.innerHTML = "";
+    document.getElementById("wood").innerHTML = null;
 }
 
 function createTestingNode(number){

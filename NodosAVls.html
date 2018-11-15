@@ -23,9 +23,10 @@
                 </span>
                 <div class="col-lg-6">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" id="AddButton" onclick="searchNumber(); ">Search</button>
-                        <button type="button" class="btn btn-primary" id="AddButton" onclick="printTreeAsList(); ">Print</button>
-                        <button type="button" class="btn btn-primary" id="AddButton" onclick="resetNode(); ">Reset Node</button>
+                        <button type="button" class="btn btn-primary" id="SearchButton" onclick="searchNumber(); ">Search</button>
+                        <button type="button" class="btn btn-primary" id="PrintOrderButton" onclick="printTreeAsList(); ">Print</button>
+                        <button type="button" class="btn btn-primary" id="Resetutton" onclick="resetNode(); ">Reset Node</button>
+                        <button type="button" class="btn btn-primary" id="GraphButton" onclick="printGraph(); ">Print Tree</button>
                     </span>
                 </div>
                </div>
@@ -51,7 +52,7 @@
         </div>
     </div>
 
-    <div class="container" style="padding: 10px">
+    
         <div class="wood" id="wood">
             <!--<div class="node" style="height:100px;left:20%;"> 2 </div>
             <div class="node" style="height:150px;left:30%;"> 3 </div>
@@ -61,7 +62,7 @@
             <div class="node" style="height:150px;left:70%;"> 6 </div>
             <div class="node" style="height:100px;left:80%;"> 7 </div>-->
         </div>
-    </div>
+    
 
 
     <script>
