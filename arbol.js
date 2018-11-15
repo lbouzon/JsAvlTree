@@ -159,8 +159,7 @@ class Node {
 	};
 }
 
-
-	function searchNumber() {
+function searchNumber() {
     let numberToSearch = Number(document.getElementById("numberHolder").value);
     let lista = document.getElementById("listaNum")
     document.getElementById("numberHolder").value = null;
