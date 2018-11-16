@@ -54,11 +54,34 @@ function treeToDic(node, path = "") {
 
 
 
-    function drawlines() {
+    function drawLine() {
 
         let listNodos = document.getElementsByClassName("node");
         for (i = 0; i < listNodos.length; i++){
             console.log(listNodos[i].getBoundingClientRect());
         }
+        
+        let wood = document.getElementById("wood");
+        let lineGroup = document.createElement("svg");
+        lineGroup.setAttribute("viewBox", "0 0 1000 1000");
+        lineGroup.setAttribute("height", "1000");
+        lineGroup.setAttribute("width", "1000");
+        
+        
+        
+
+        var newLine = document.createElement('line');
+        newLine.setAttribute('id','line2');
+        newLine.setAttribute('x1','50');
+        newLine.setAttribute('y1','50');
+        newLine.setAttribute('x2','23');
+        newLine.setAttribute('y2','31');
+        newLine.setAttribute("stroke", "black");
+
+        lineGroup.appendChild(newLine);
+
+
+        wood.appendChild(lineGroup);
+        return wood;
         
     }
