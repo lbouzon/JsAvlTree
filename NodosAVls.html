@@ -1,28 +1,26 @@
-﻿ <!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Chicho´s</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <title>Chicho´s</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-  
+    <div class="container">
+        <h1>Javascript Exercises</h1>
+        <p>Enter a number in the box and click the button.</p>
+    </div>
 
-<div class="container"  >
-  <h1>Javascript Exercises</h1>
-  <p>Enter a number in the box and click the button.</p>
-</div> 
-
-<div class="container"  style="padding: 10px">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="input-group">
-                <input class="form-control" type="text" id="numberHolder" placeholder="Text input">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" id="AddButton" onclick="addNumberToList(); ">Add Number</button>
-                </span>
-                <div class="col-lg-8">
+    <div class="container" style="padding: 10px">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="numberHolder" placeholder="Text input">
+                    <span class="input-group-btn">
+                         <button type="button" class="btn btn-primary" id="AddButton" onclick="addNumberToList(); ">Add Number</button>
+                    </span>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-primary" id="SearchButton" onclick="searchNumber(); ">Search</button>
                         <button type="button" class="btn btn-primary" id="PrintOrderButton" onclick="printTreeAsList(); ">Print</button>
@@ -32,32 +30,35 @@
             </div>
         </div>
     </div>
-</div>
     <div class="container" style="padding: 10px">
         <div class="row">
             <div class="col-lg-4">
                 <button type="button" class="btn btn-primary" id="GraphButton" onclick="printGraph(); ">Print Tree</button>
-                <button type="button" class="btn btn-primary" id="GraphButton" onclick="drawLine(); ">Draw Lines</button>
+                <button type="button" class="btn btn-primary" id="GraphButton2" onclick="drawLine(); ">Draw Lines</button>
             </div>
         </div>
     </div>
-            <div class="container" style="padding: 10px">
-                <div class="row">
-                    <ul class="list-group col-md-2" id="listaNum"></ul>
-                </div>
-            </div>
-            <div class="container" style="padding: 10px">
-                <div class="row">
-                    <ul class="list-group col-md-3" id="treeAvl"></ul>
-                </div>
-            </div>
-            <div class="wood" id="wood">
-            </div>
-            <script src="arbol.js"></script>
-            <script src="printTree.js"></script>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-            <link rel="stylesheet" type="text/css" href="node.css">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div class="container" style="padding: 10px">
+        <div class="row">
+            <ul class="list-group col-md-2" id="listaNum"></ul>
+        </div>
+    </div>
+    <div class="container" style="padding: 10px">
+        <div class="row">
+            <ul class="list-group col-md-2" id="treeAvl"></ul>
+        </div>
+    </div>
+    <div class="wood" id="wood">
+    </div>
+
+    <script src="arbol.js"></script>
+    <script src="printTree.js"></script>
+    <script src="visitor.js"></script>
+    <script src="webpage.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="node.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-</html> 
+
+</html>

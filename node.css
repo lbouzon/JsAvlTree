@@ -1,36 +1,21 @@
-﻿body
-{
+﻿body {
     background-color: #E6E6FA;
-    
 }
 
-.node
- {
-   /* width: 9%;*/
+.node {
+    /* width: 9%;*/
     bottom: 50px;
-    height:30px;
+    height: 30px;
     position: absolute;
     /*background-color: yellow;*/
     /*opacity: 0.4;*/
-    border : 3px solid black;
+    border: 3px solid black;
     text-align: center;
     padding: 3px;
-    
-    
- }
+}
 
-.wood
- {
+.wood {
     width: 90%;
     bottom: 0px;
-    position:absolute;
-    
- }
-
-.svg{
-    position : absolute;
-    z-index:2;
-    
-    stroke:rgb(255,0,0);
-    stroke-width:10px;
+    position: absolute;
 }
